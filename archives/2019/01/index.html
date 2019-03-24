@@ -351,18 +351,7 @@
                 <span>Binding &amp; Closure</span>
         </a>
         <div class="abstract-content">
-            Binding &amp; ClosureBinding created a (name, value) pair. Here, values can also be functions.
-Declarations create bindings.
-1let x = 3 in x+2 ;;
-
-let: declaration
-in: scope
-NOTE: Do not confuse this with assignment. 
-
-3 components of closure
-parameters
-body
-pointer to the environment when it is ...
+            Binding != Assignment
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -391,9 +380,7 @@ pointer to the environment when it is ...
                 <span>Inductive Data Types</span>
         </a>
         <div class="abstract-content">
-            Inductive Data TypesLecture notes for COMP302.
-Lists as inductive structures
-NOTE: Induction works if and only if the system has a well-founded order.Inductive definitions of data typesLet [ ] is a list. If you have a list, say l, and an item, sayi, then i::l is also a list.List0 = [ ]List1 = [1]...
+            Tree as an example
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -422,11 +409,7 @@ NOTE: Induction works if and only if the system has a well-founded order.Inducti
                 <span>fold_right and fold_left</span>
         </a>
         <div class="abstract-content">
-            fold_right and fold_leftcredits: textbook from Cornell’s cs 3110.
-Some useful explanations for fold functions in OCaml.
-
-fold_rightLet’s start with two functions: sum and concat
-1234567let rec sum = function| [] -&gt; 0| h::t -&gt; h + sum tlet rec concat = function| [] -&gt; ""| h::t -&gt; h ^ c...
+            fold in OCaml
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -517,8 +500,6 @@ fold_rightLet’s start with two functions: sum and concat
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
     
     
     
