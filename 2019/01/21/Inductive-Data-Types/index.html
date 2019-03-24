@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Sixian Li</title>
+    <title>Inductive Data Types · Sixian Li</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -77,6 +77,8 @@
 
     <link rel="preload" href="/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -201,14 +203,23 @@
 </head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">Sixian Li</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Inductive Data Types</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">Sixian Li</a>
 </header>
@@ -227,17 +238,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg3.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/my-post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Sixian Li
-            <!-- 文章页  -->
+            Inductive Data Types
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -245,12 +256,40 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                Uncloak the Unknown
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
+    
+</div>
+                
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/01/21</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -351,207 +390,91 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/02/06/Higher-order-functions/">
-            
-                <span>Higher-order functions</span>
-        </a>
-        <div class="abstract-content">
-            Higher-order functionsLevels of abstraction12345let rec sumInts(a,b) = if (a &gt; b) then 0 else a + sumInts(a+1,b);;let rec sumSquares(a,b) = if (a &gt; b) then 0 else (a*a) + sumSquares(a+1,b);;let rec sumCubes(a,b) = if (a &gt; b) then 0 else (a*a*a) + sumCubes(a+1,b);;
-It’s not hard to see th...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/01/23/Binding/">
-            
-                <span>Binding &amp; Closure</span>
-        </a>
-        <div class="abstract-content">
-            Binding &amp; ClosureBinding created a (name, value) pair. Here, values can also be functions.
-Declarations create bindings.
-1let x = 3 in x+2 ;;
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Inductive-Data-Types"><a href="#Inductive-Data-Types" class="headerlink" title="Inductive Data Types"></a>Inductive Data Types</h1><p>Lecture notes for COMP302.</p>
+<h3 id="Lists-as-inductive-structures"><a href="#Lists-as-inductive-structures" class="headerlink" title="Lists as inductive structures"></a>Lists as inductive structures</h3><ul>
+<li>NOTE: Induction works if and only if the system has a well-founded order.<h3 id="Inductive-definitions-of-data-types"><a href="#Inductive-definitions-of-data-types" class="headerlink" title="Inductive definitions of data types"></a>Inductive definitions of data types</h3>Let <code>[ ]</code> is a list. If you have a list, say <code>l</code>, and an item, say<code>i</code>, then <code>i::l</code> is also a list.<br><code>List0 = [ ]</code><br><code>List1 = [1], [2],...,[ ]</code><br><code>List2 = [1; 1], [1; 2],...,[4; 1],...</code><br>The entire collection LIST = union_n LIST_n, an infinite set. However, the description is short, concise, and finite.<br>This is a built-in type. There are functions like <code>map, filter</code> in this module.</li>
+</ul>
+<h3 id="How-do-I-define-my-own-inductive-types"><a href="#How-do-I-define-my-own-inductive-types" class="headerlink" title="How do I define my own inductive types?"></a>How do I define my own inductive types?</h3><p>Lists are linear data types, tail recursion works well for linear data types.</p>
+<h4 id="Trees"><a href="#Trees" class="headerlink" title="Trees"></a>Trees</h4><p>Trees are <strong>not built-in</strong>. Here we only talked about binary trees.</p>
+<ul>
+<li><p>Inductive definition:<br><code>EMPTY</code>    is a tree.<br>If <code>t1, t2</code> are trees, and <code>i</code> is an item. Then <code>i(t1, t2)</code> is a tree (NOT linear).</p>
+</li>
+<li><p>How to code a <code>Tree</code> in OCaml<br>We have user-defined inductive types.<br><code>type &#39;a tree = Empty | Node of &#39;a tree * &#39;a * &#39;a tree</code></p>
+<ol>
+<li><p><code>&#39;a means:</code>Polymorphic binary trees. <code>&#39;a</code> can be instantiated with any type: ints, strings…</p>
+<p>You don’t have to declare types. Type inference comes to help.</p>
+<p><code>let max (n, m) = if n &lt; m then m else n;;</code></p>
+</li>
+<li><p><code>Node</code>: constructor function. Always start with capital letters.</p>
+</li>
+</ol>
+<ul>
+<li><p>Examples:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> t1 = <span class="type">Node</span>(<span class="type">Empty</span>, <span class="number">0</span>, (<span class="type">Node</span>(<span class="type">Empty</span>, <span class="number">1</span>, <span class="type">Empty</span>)));;</span><br><span class="line"></span><br><span class="line"><span class="comment">(* height *)</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> height (t: <span class="symbol">'a</span> tree) = </span><br><span class="line">	<span class="keyword">match</span> t <span class="keyword">with</span></span><br><span class="line">	| <span class="type">Empty</span> -&gt; <span class="number">0</span></span><br><span class="line">	| <span class="type">Node</span> (l,_,r) -&gt; <span class="number">1</span> + max(height l, height r);;</span><br><span class="line">	</span><br><span class="line"><span class="comment">(* sumNodes *)</span></span><br><span class="line"><span class="comment">(* showInt*)</span></span><br><span class="line"><span class="comment">(* inOrder *)</span></span><br><span class="line"><span class="comment">(* (inOrder l); (showInt n); (inOrder r);;</span></span><br><span class="line"><span class="comment">	The ; suggests sequence. It's not pure.</span></span><br><span class="line"><span class="comment">*)</span></span><br><span class="line"><span class="comment">(* flatten *)</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Expression trees</p>
+<p><code>Const, Var, Plus, Times</code></p>
+<p><code>type binding</code>: char * int</p>
+<p><code>type env = binding list</code></p>
+<p><code>let rho: env = [(&#39;x&#39;, 11); (&#39;y&#39;, 7); (&#39;z&#39;, 2)]</code></p>
+<p>What if there’s no such names?</p>
+<ul>
+<li><p>OPTION TYPE, a new type constructor. If <code>t</code> is a type, then <code>t option</code> is another type. Allows you to optionally return a <code>NOne</code> value.</p>
+</li>
+<li><p>EX. 1729 is an integer. </p>
+<p>None is an integer option. </p>
+<p>Some 1729 is an integer option.</p>
+<p>Not returning int value, return <code>int option</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> eval (e: exptree) (rho: env) = </span><br><span class="line">	<span class="keyword">match</span> e <span class="keyword">with</span></span><br><span class="line">	| <span class="type">Const</span> n -&gt; n</span><br><span class="line">	| <span class="type">Var</span> v -&gt; (<span class="keyword">match</span> (lookup v rho)) <span class="keyword">with</span></span><br><span class="line">				| <span class="type">None</span> -&gt; raise <span class="type">NotFound</span></span><br><span class="line">				| <span class="type">Some</span> r -&gt; r</span><br></pre></td></tr></table></figure>
 
-let: declaration
-in: scope
-NOTE: Do not confuse this with assignment. 
-
-3 components of closure
-parameters
-body
-pointer to the environment when it is ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
     </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/01/21/Inductive-Data-Types/">
-            
-                <span>Inductive Data Types</span>
-        </a>
-        <div class="abstract-content">
-            Inductive Data TypesLecture notes for COMP302.
-Lists as inductive structures
-NOTE: Induction works if and only if the system has a well-founded order.Inductive definitions of data typesLet [ ] is a list. If you have a list, say l, and an item, sayi, then i::l is also a list.List0 = [ ]List1 = [1]...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/01/17/fold-right-and-fold-left/">
-            
-                <span>fold_right and fold_left</span>
-        </a>
-        <div class="abstract-content">
-            fold_right and fold_leftcredits: textbook from Cornell’s cs 3110.
-Some useful explanations for fold functions in OCaml.
-
-fold_rightLet’s start with two functions: sum and concat
-1234567let rec sum = function| [] -&gt; 0| h::t -&gt; h + sum tlet rec concat = function| [] -&gt; ""| h::t -&gt; h ^ c...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
+    <!-- license  -->
     
     <!-- paginator  -->
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src="/avatar/me.jpg">
-    <div class="profile-name">Sixian Li</div>
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/01/23/Binding/" title="Binding & Closure">
+                    <div class="nextTitle">Binding & Closure</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/01/17/fold-right-and-fold-left/" title="fold_right and fold_left">
+                    <div class="prevTitle">fold_right and fold_left</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <div class="profile-signature">
-        Uncloak the Unknown
-    </div>
     
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-    <div class="profile-social">
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-    
-        <div class="about-me">
-            <a href="/about">ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -610,6 +533,24 @@ fold_rightLet’s start with two functions: sum and concat
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Inductive-Data-Types"><span class="toc-number">1.</span> <span class="toc-text">Inductive Data Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lists-as-inductive-structures"><span class="toc-number">1.0.1.</span> <span class="toc-text">Lists as inductive structures</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Inductive-definitions-of-data-types"><span class="toc-number">1.0.2.</span> <span class="toc-text">Inductive definitions of data types</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-do-I-define-my-own-inductive-types"><span class="toc-number">1.0.3.</span> <span class="toc-text">How do I define my own inductive types?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Trees"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">Trees</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -761,6 +702,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
