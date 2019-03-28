@@ -395,7 +395,7 @@ height:50vh;
         <p>Source code from <a href="https://www.cs.mcgill.ca/~prakash/Courses/302/Notes/streams.ml" target="_blank" rel="noopener">COMP302 course page</a>. Some helper functions are not shown here.</p>
 <p>This post is my attempt to understand the beauty and power of streams.</p>
 <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><blockquote>
-<p>The stream type below allows finite and infinite streams.  Finite streams end with an<br>end-of-stream marker that is written as Eos.  An infinite stream does not end so it will not have<br>an end-of-stream marker.</p>
+<p>The stream type below allows finite and infinite streams.  Finite streams end with an<br>end-of-stream marker that is written as Eos.  An infinite stream does not end so it will not have an end-of-stream marker.</p>
 </blockquote>
 <figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="symbol">'a</span> stream = <span class="type">Eos</span> | <span class="type">StrCons</span> <span class="keyword">of</span> <span class="symbol">'a</span> * (<span class="built_in">unit</span> -&gt; <span class="symbol">'a</span> stream)</span><br></pre></td></tr></table></figure>
 <p>To represent “infinity”, we need to <strong>suspend </strong> the evaluation or no memory is large enough to hold infinite data. Here, we wrap the stream inside a function, and we “wake up” the stream by applying the function. We can never see the whole stream let alone print it, but we can ask for part of it, as long as this part is finite.</p>
@@ -536,6 +536,8 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
     
     
     
