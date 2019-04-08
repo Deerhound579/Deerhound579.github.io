@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>fold_right and fold_left · Sixian Li</title>
+    <title>Minimum spanning tree · Sixian Li</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">Sixian Li</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">fold_right and fold_left</a>
+                <a href="#" class="post-name">Minimum spanning tree</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            fold_right and fold_left
+            Minimum spanning tree
             <!-- 404 -->
             
         </h1>
@@ -264,16 +264,10 @@ height:50vh;
             <div class="post-intros">
                 <!-- 文章页标签  -->
                 
-                    <div class="post-intro-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-                
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/01/17</span>
+                    <span class="post-intro-time">2019/04/07</span>
                     
                     <span class="shareWrapper">
                         <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -392,26 +386,18 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="fold-right-and-fold-left"><a href="#fold-right-and-fold-left" class="headerlink" title="fold_right and fold_left"></a>fold_right and fold_left</h1><p>credits: textbook from Cornell’s <a href="https://www.cs.cornell.edu/courses/cs3110/2019sp/textbook/hop/fold_left.html" target="_blank" rel="noopener">cs 3110</a>.</p>
-<p>Some useful explanations for <code>fold</code> functions in OCaml.</p>
-<hr>
-<h4 id="fold-right"><a href="#fold-right" class="headerlink" title="fold_right"></a>fold_right</h4><p>Let’s start with two functions: <code>sum</code> and <code>concat</code></p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sum = <span class="keyword">function</span></span><br><span class="line">| <span class="literal">[]</span> -&gt; <span class="number">0</span></span><br><span class="line">| h::t -&gt; h + sum t</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> concat = <span class="keyword">function</span></span><br><span class="line">| <span class="literal">[]</span> -&gt; <span class="string">""</span></span><br><span class="line">| h::t -&gt; h ^ concat t</span><br></pre></td></tr></table></figure>
-<p>We notice that these two functions are very similar. The only differences are the base case value (<code>0</code> and <code>&quot;&quot;</code>) and the operator (<code>+</code> and <code>^</code>).</p>
-<p>We love abstraction. So we rewrite these two functions as</p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> combine op init = <span class="keyword">function</span></span><br><span class="line">| <span class="literal">[]</span> -&gt; init</span><br><span class="line">| h::t -&gt; op h (combine op init t)</span><br></pre></td></tr></table></figure>
-<p>Why is it called fold_right?</p>
-<p>Because the associativity is from right to left like this:</p>
-<p><code>(a+(b+(c+0)))</code></p>
-<h4 id="fold-left"><a href="#fold-left" class="headerlink" title="fold_left"></a>fold_left</h4><p><code>fold_left</code> is actually a handy function for tail recursion.</p>
-<p>It is implemented like this:</p>
-<p><code>fold_left op acc list</code></p>
-<blockquote>
-<p>In <code>fold_right</code>, you will notice that the value passed as the <code>init</code>argument is the same for every recursive invocation of <code>fold_right</code>: it’s passed all the way down to where it’s needed, at the right-most element of the list, then used there exactly once. But in <code>fold_left</code>, you will notice that at each recursive invocation, the value passed as the argument <code>acc</code> can be different.</p>
-</blockquote>
-<p>NOTE: In <code>fold_left</code>, its type is:</p>
-<p><code>(&#39;a -&gt; &#39;b -&gt; &#39;a) -&gt; &#39;a -&gt; &#39;b list -&gt; &#39;a = &lt;fun&gt;</code><br>In the example <code>rev</code> below,  the function is <code>fun l a</code> instead of <code>fun a l</code></p>
-<h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* reverse a list *)</span></span><br><span class="line"><span class="keyword">let</span> rev lst = fold_left (<span class="keyword">fun</span> l a -&gt; a::l) <span class="literal">[]</span> lst</span><br><span class="line"></span><br><span class="line"><span class="comment">(* calculate the length of a list*)</span></span><br><span class="line"><span class="keyword">let</span> len lst = fold_left (<span class="keyword">fun</span> a _ -&gt; a+<span class="number">1</span>) <span class="number">0</span> lst</span><br><span class="line"></span><br><span class="line"><span class="comment">(* map in fold*)</span></span><br><span class="line"><span class="keyword">let</span> mapp f lst = fold_right (<span class="keyword">fun</span> e_of_l init -&gt; (f e_of_l)::init) lst <span class="literal">[]</span> ;;</span><br><span class="line"></span><br><span class="line"><span class="comment">(* filter in fold*)</span></span><br><span class="line"><span class="keyword">let</span> filterr f lst = fold_right (<span class="keyword">fun</span> e_of_l init -&gt; <span class="keyword">if</span> (f e_of_l) <span class="keyword">then</span> e_of_l::init <span class="keyword">else</span> init) lst <span class="literal">[]</span> ;;</span><br></pre></td></tr></table></figure>
+        <p>My attempt to reconstruct a detailed proof for a remark on <a href="http://luc.devroye.org/HenriMertens-ShortestPath+MST-2019.pdf" target="_blank" rel="noopener">Luc Devroye’s note of MST</a>.</p>
+<h2 id="Max-edge-in-a-spanning-tree"><a href="#Max-edge-in-a-spanning-tree" class="headerlink" title="Max edge in a spanning tree"></a>Max edge in a spanning tree</h2><p>Let $T$ be a spanning tree of $G(V,E)$ and $L(T) = max_{(u,v)\in T}\ w[u, v]$, the longest edge in a spanning tree.</p>
+<p>$\text{Claim: The minimum spanning tree also minimizes L(T), that is, }$</p>
+<script type="math/tex; mode=display">
+L(MST) = min_{all\ T} L(T)</script><p>$\text{Proof:}$</p>
+<p><img src="/images/mst.png" alt="mst.png"></p>
+<p>“$\geq​$”</p>
+<p>MST$\in$T, so L(MST) cannot be less than the <strong>minimum</strong> L(T) of all T’s.</p>
+<p>“$\leq$”</p>
+<p>In the figure above, we assume the red arrow is the longest edge in MST. We construct the MST by adding the shortest “bridge” each time we cross two sets, $A$ and $V-A$. Thus, all other grey edges are <strong>longer</strong> than or equal to the red edge. These grey edges are in some other spanning trees.</p>
+<p>For convenience, take one grey edge and call it $(x,y)$ because it’s from some vertex $x\in A$ to $y \in V-A$. If it’s the max edge of its spanning tree, $T_x$. $L(T_x) \geq L(MST)$.<br>If it’s not, there exists a max edge $(x’,y’)$ in $T_x$ such that $(x’,y’) \gt (x, y) \geq L(MST)$. So $L(T_x) \geq L(MST)$.</p>
+<p>Q.E.D</p>
 
     </article>
     <!-- license  -->
@@ -420,13 +406,13 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/01/21/Inductive-Data-Types/" title="Inductive Data Types">
-                    <div class="nextTitle">Inductive Data Types</div>
-                </a>
-            
         </li>
         <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/03/25/Streams/" title="Stream">
+                    <div class="prevTitle">Stream</div>
+                </a>
             
         </li>
     </ul>
@@ -524,7 +510,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#fold-right-and-fold-left"><span class="toc-number">1.</span> <span class="toc-text">fold_right and fold_left</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-right"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">fold_right</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-left"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">fold_left</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Examples"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">Examples</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Max-edge-in-a-spanning-tree"><span class="toc-number">1.</span> <span class="toc-text">Max edge in a spanning tree</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
