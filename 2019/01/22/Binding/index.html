@@ -22,7 +22,7 @@
     <meta name="description" content>
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Sixian Li</title>
+    <title>Binding &amp; Closure · Sixian Li</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -203,12 +203,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/">Sixian Li</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Binding & Closure</a>
+            </div>
+    </div>
     
     <a class="home-link" href="/">Sixian Li</a>
 </header>
@@ -220,24 +231,65 @@
 
 
 
+
+height:50vh;
 ">
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/my-post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            Binding & Closure
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class="post-intro-tags">
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
+    
+</div>
+                
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/01/22</span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -338,242 +390,128 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/08/11/Ubuntu18-04-remap-mouse-buttons/">
-            
-                <span>Ubuntu 18.04 Remap mouse buttons</span>
-        </a>
-        <div class="abstract-content">
-            Remap buttons on a *wireless* mouse
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/11</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="Ubuntu">Ubuntu</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="Binding-amp-Closure"><a href="#Binding-amp-Closure" class="headerlink" title="Binding &amp; Closure"></a>Binding &amp; Closure</h2><p><em>Binding</em> created a <code>(name, value)</code> pair. Here, values can also be functions.</p>
+<p><em>Declarations</em> create bindings.</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">3</span> <span class="keyword">in</span> x+<span class="number">2</span> ;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>let</code>: declaration</li>
+<li><code>in</code>: scope</li>
+<li><strong>NOTE</strong>: Do not confuse this with assignment. </li>
+</ul>
+<h3 id="3-components-of-closure"><a href="#3-components-of-closure" class="headerlink" title="3 components of closure"></a>3 components of closure</h3><ol>
+<li>parameters</li>
+<li>body</li>
+<li>pointer to the environment when it is defined (<strong>static binding</strong>, <strong>lexical scoping</strong>)</li>
+</ol>
+<p>NOTE: Environment can only be added, so there are layers. The pointer is pointing to the correct environment. A layer will be swept by garbage collection when there is no pointer points to it. </p>
+<h4 id="Side-note-static-binding-and-dynamic-binding-in-Java"><a href="#Side-note-static-binding-and-dynamic-binding-in-Java" class="headerlink" title="Side note: static binding and dynamic binding in Java:"></a><a href="https://beginnersbook.com/2013/04/java-static-dynamic-binding/" target="_blank" rel="noopener">Side note</a>: static binding and dynamic binding in Java:</h4><blockquote>
+<ul>
+<li><p>Static binding</p>
+<p>…So whenever a binding of static, private and final methods happen, <strong>type of the class</strong> is determined by the compiler at <strong>compile time</strong> (<strong>not</strong> determined by type of the object) and the binding happens then and there.</p>
+</li>
+<li><p>Dynamic binding</p>
+<p>The <strong>type of the object</strong> is determined at the runtime(by the <code>new someconstructor()</code> keyword).</p>
+</li>
+<li><p>Overload and Override</p>
+<p>The binding of <a href="https://beginnersbook.com/2013/05/method-overloading/" target="_blank" rel="noopener">overloaded methods</a> is static and the binding of overridden methods is dynamic.</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="Binding-vs-Assignment"><a href="#Binding-vs-Assignment" class="headerlink" title="Binding vs. Assignment"></a>Binding vs. Assignment</h3><p>In an imperative language, like Java, when we assign a value to a variable, we make  an analogy between our <code>variable</code> and <code>box</code>. A variable itself is a container, and it holds some value. However, when we <strong>bind</strong> a name to a variable, we are attaching a <strong>label</strong> on that <strong>value</strong>. </p>
+<p>Consider the code snippet below.</p>
+<p><code>y = x + 1</code> is not closed on the name <code>x</code>. It is <strong>closed</strong> on the value <strong>3</strong> which was bound to <code>x</code>. So <code>y</code> will never change with <code>x</code>.</p>
+<p>A really good explanation from <a href="https://stackoverflow.com/questions/48100145/binding-vs-assignment" target="_blank" rel="noopener">stack overflow</a>:</p>
+<blockquote>
+<p>You can think of binding as a label on a suitcase, and assignment as a suitcase.</p>
+</blockquote>
+<p>Now, let’s look at this example:</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">3</span> <span class="keyword">in</span> </span><br><span class="line">	<span class="keyword">let</span> f = <span class="keyword">fun</span> x -&gt; x <span class="keyword">in</span> </span><br><span class="line"> 	<span class="keyword">let</span> x = <span class="number">99</span> <span class="keyword">in</span></span><br><span class="line"> 	f x</span><br></pre></td></tr></table></figure>
+<p><strong>Layers</strong></p>
+<p><code>x | 99</code> </p>
+<p><code>f | (3 components)</code> parameter: x | body: x | pointer to <code>x = 3</code>  </p>
+<p><code>x | 3</code></p>
+<p>When we evaluate <code>f x</code>:</p>
+<ol>
+<li><code>f</code> is a closure, should be a function</li>
+<li>Now its parameter is x! Let’s look for <code>x</code></li>
+<li>Ok, <code>x</code> is 99. Let’s evaluate. At this point, the layer <code>x | 99</code> will go along with the pointer to the layer <code>x | 3</code>. <strong>IMPORTANT: 3 is masked because 99 is on the top layer.</strong></li>
+</ol>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">3</span> <span class="keyword">in</span> <span class="comment">(* binding *)</span></span><br><span class="line">	<span class="keyword">let</span> y = x + <span class="number">1</span> <span class="keyword">in</span></span><br><span class="line">	<span class="keyword">let</span> x = <span class="number">2</span> <span class="keyword">in</span></span><br><span class="line">	x + y</span><br></pre></td></tr></table></figure>
+<p>When you evaluate this, <code>x</code> is not built-in. It is stored in a structure called <u>environment</u>. So the compiler will look for what is <code>x</code>.</p>
+<p><code>x | 3</code> —-&gt; base environment</p>
+<p><code>x + 2</code> to be evaluated. <code>x</code> is found in the top layer.</p>
+<p><strong>Layers</strong></p>
+<p><code>x | 2</code></p>
+<p><code>y | 4</code></p>
+<p><code>x | 3</code></p>
+<p>|||BASE ENV|||</p>
+<p><strong><u>NOTE</u></strong>: Never put <u>bindings</u> in the value part. It looks for <code>x</code> in the environment, and put the value of <code>x</code> in <code>x+1</code>.</p>
+<p>Here, <code>x-3</code> is <strong>masked, but it is still there</strong>. During the evaluation, it picks the <code>x</code> in the top layer.</p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/05/12/projections/">
-            
-                <span>Dot products and projections</span>
-        </a>
-        <div class="abstract-content">
-            Why are they related?
+        <div class="license-wrapper">
+            <p>Author：<a href="https://sixian.li">Sixian Li</a>
+            </p><p>Original：<a href="https://sixian.li/2019/01/22/Binding/">https://sixian.li/2019/01/22/Binding/</a>
+            </p><p>Date：January 22nd 2019, 11:00:00 am
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/01/22/Binding/">August 21st 2019, 9:10:45 pm</a> -->
+            </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="linear algebra">linear algebra</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/04/07/tree/">
-            
-                <span>Minimum spanning tree</span>
-        </a>
-        <div class="abstract-content">
-            MST has the min max edge
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/07</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="algorithm">algorithm</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/03/24/Streams/">
-            
-                <span>Stream</span>
-        </a>
-        <div class="abstract-content">
-            Infinite data structure
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/24</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/02/06/Higher-order-functions/">
-            
-                <span>Higher-order functions</span>
-        </a>
-        <div class="abstract-content">
-            Feed functions into functions
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/01/22/Binding/">
-            
-                <span>Binding &amp; Closure</span>
-        </a>
-        <div class="abstract-content">
-            Binding != Assignment
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/01/20/Inductive-Data-Types/">
-            
-                <span>Inductive Data Types</span>
-        </a>
-        <div class="abstract-content">
-            Tree as an example
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href="/2019/01/17/fold-right-and-fold-left/">
-            
-                <span>fold_right and fold_left</span>
-        </a>
-        <div class="abstract-content">
-            fold in OCaml
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/17</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class="abstract-tags">
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2019/02/06/Higher-order-functions/" title="Higher-order functions">
+                    <div class="nextTitle">Higher-order functions</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2019/01/20/Inductive-Data-Types/" title="Inductive Data Types">
+                    <div class="prevTitle">Inductive Data Types</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "tT7uYvvECypLwTdv5n8hnIRj-gzGzoHsz",
+        appKey: "nKYXiNp8yWR7O5WDH2UMmyB5",
+        placeholder: "Feel free to share your thoughts!",
+        path:window.location.pathname, 
+        avatar:'retro',
+        lang:'en',
+    });
+    </script>
+
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -638,6 +576,24 @@
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Binding-amp-Closure"><span class="toc-number">1.</span> <span class="toc-text">Binding &amp; Closure</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-components-of-closure"><span class="toc-number">1.1.</span> <span class="toc-text">3 components of closure</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Side-note-static-binding-and-dynamic-binding-in-Java"><span class="toc-number">1.1.1.</span> <span class="toc-text">Side note: static binding and dynamic binding in Java:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binding-vs-Assignment"><span class="toc-number">1.2.</span> <span class="toc-text">Binding vs. Assignment</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -867,6 +823,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

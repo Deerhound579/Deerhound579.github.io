@@ -398,19 +398,20 @@ height:50vh;
 <h4 id="fold-right"><a href="#fold-right" class="headerlink" title="fold_right"></a>fold_right</h4><p>Let’s start with two functions: <code>sum</code> and <code>concat</code></p>
 <figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sum = <span class="keyword">function</span></span><br><span class="line">| <span class="literal">[]</span> -&gt; <span class="number">0</span></span><br><span class="line">| h::t -&gt; h + sum t</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> concat = <span class="keyword">function</span></span><br><span class="line">| <span class="literal">[]</span> -&gt; <span class="string">""</span></span><br><span class="line">| h::t -&gt; h ^ concat t</span><br></pre></td></tr></table></figure>
 <p>We notice that these two functions are very similar. The only differences are the base case value (<code>0</code> and <code>&quot;&quot;</code>) and the operator (<code>+</code> and <code>^</code>).</p>
-<p>We love abstraction. So we rewrite these two functions as</p>
+<p>We love abstractions. So we rewrite these two functions as</p>
 <figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> combine op init = <span class="keyword">function</span></span><br><span class="line">| <span class="literal">[]</span> -&gt; init</span><br><span class="line">| h::t -&gt; op h (combine op init t)</span><br></pre></td></tr></table></figure>
-<p>Why is it called fold_right?</p>
+<h4 id="fold-right-1"><a href="#fold-right-1" class="headerlink" title="fold_right"></a>fold_right</h4><p>Why is it called fold_right?</p>
 <p>Because the associativity is from right to left like this:</p>
 <p><code>(a+(b+(c+0)))</code></p>
-<h4 id="fold-left"><a href="#fold-left" class="headerlink" title="fold_left"></a>fold_left</h4><p><code>fold_left</code> is actually a handy function for tail recursion.</p>
+<p>It is actually a handy function for tail recursion.</p>
+<h4 id="fold-left"><a href="#fold-left" class="headerlink" title="fold_left"></a>fold_left</h4><p>Similarly, the associativity, as its name suggests, is <code>((a+0)+b)+c)</code>.</p>
 <p>It is implemented like this:</p>
-<p><code>fold_left op acc list</code></p>
+<p><code>fold_left op acc(base case) list</code></p>
 <blockquote>
 <p>In <code>fold_right</code>, you will notice that the value passed as the <code>init</code>argument is the same for every recursive invocation of <code>fold_right</code>: it’s passed all the way down to where it’s needed, at the right-most element of the list, then used there exactly once. But in <code>fold_left</code>, you will notice that at each recursive invocation, the value passed as the argument <code>acc</code> can be different.</p>
 </blockquote>
 <p>NOTE: In <code>fold_left</code>, its type is:</p>
-<p><code>(&#39;a -&gt; &#39;b -&gt; &#39;a) -&gt; &#39;a -&gt; &#39;b list -&gt; &#39;a = &lt;fun&gt;</code><br>In the example <code>rev</code> below,  the function is <code>fun l a</code> instead of <code>fun a l</code></p>
+<p><code>(&#39;a -&gt; &#39;b -&gt; &#39;a) -&gt; &#39;a -&gt; &#39;b list -&gt; &#39;a = &lt;fun&gt;</code><br>In the example <code>rev</code> below,  the function is <code>fun a l</code> instead of <code>fun l a</code></p>
 <h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* reverse a list *)</span></span><br><span class="line"><span class="keyword">let</span> rev lst = fold_left (<span class="keyword">fun</span> l a -&gt; a::l) <span class="literal">[]</span> lst</span><br><span class="line"></span><br><span class="line"><span class="comment">(* calculate the length of a list*)</span></span><br><span class="line"><span class="keyword">let</span> len lst = fold_left (<span class="keyword">fun</span> a _ -&gt; a+<span class="number">1</span>) <span class="number">0</span> lst</span><br><span class="line"></span><br><span class="line"><span class="comment">(* map in fold*)</span></span><br><span class="line"><span class="keyword">let</span> mapp f lst = fold_right (<span class="keyword">fun</span> e_of_l init -&gt; (f e_of_l)::init) lst <span class="literal">[]</span> ;;</span><br><span class="line"></span><br><span class="line"><span class="comment">(* filter in fold*)</span></span><br><span class="line"><span class="keyword">let</span> filterr f lst = fold_right (<span class="keyword">fun</span> e_of_l init -&gt; <span class="keyword">if</span> (f e_of_l) <span class="keyword">then</span> e_of_l::init <span class="keyword">else</span> init) lst <span class="literal">[]</span> ;;</span><br></pre></td></tr></table></figure>
 
     </article>
@@ -420,7 +421,7 @@ height:50vh;
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
             </p><p>Original：<a href="https://sixian.li/2019/01/17/fold-right-and-fold-left/">https://sixian.li/2019/01/17/fold-right-and-fold-left/</a>
             </p><p>Date：January 17th 2019, 12:00:00 am
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/01/17/fold-right-and-fold-left/">March 25th 2019, 4:49:42 am</a> -->
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/01/17/fold-right-and-fold-left/">September 26th 2019, 9:45:38 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -429,7 +430,7 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2019/01/21/Inductive-Data-Types/" title="Inductive Data Types">
+                <a href="/2019/01/20/Inductive-Data-Types/" title="Inductive Data Types">
                     <div class="nextTitle">Inductive Data Types</div>
                 </a>
             
@@ -549,7 +550,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#fold-right-and-fold-left"><span class="toc-number">1.</span> <span class="toc-text">fold_right and fold_left</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-right"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">fold_right</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-left"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">fold_left</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Examples"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">Examples</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#fold-right-and-fold-left"><span class="toc-number">1.</span> <span class="toc-text">fold_right and fold_left</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-right"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">fold_right</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-right-1"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">fold_right</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fold-left"><span class="toc-number">1.0.0.3.</span> <span class="toc-text">fold_left</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Examples"><span class="toc-number">1.0.0.4.</span> <span class="toc-text">Examples</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -562,6 +563,12 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
     
     
     
@@ -660,7 +667,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/12</span><a class="archive-post-title" href="/2019/08/12/Ubuntu18-04-remap-mouse-buttons/">Ubuntu 18.04 Remap mouse buttons</a>
+            <span class="archive-post-date">08/11</span><a class="archive-post-title" href="/2019/08/11/Ubuntu18-04-remap-mouse-buttons/">Ubuntu 18.04 Remap mouse buttons</a>
         </li>
     
     
@@ -675,7 +682,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/Streams/">Stream</a>
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href="/2019/03/24/Streams/">Stream</a>
         </li>
     
     
@@ -685,12 +692,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/23</span><a class="archive-post-title" href="/2019/01/23/Binding/">Binding & Closure</a>
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href="/2019/01/22/Binding/">Binding & Closure</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/21</span><a class="archive-post-title" href="/2019/01/21/Inductive-Data-Types/">Inductive Data Types</a>
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href="/2019/01/20/Inductive-Data-Types/">Inductive Data Types</a>
         </li>
     
     
@@ -705,11 +712,11 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
     
+        <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
+    
         <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
     
         <span class="sidebar-tag-name" data-tags="Ubuntu"><span class="iconfont-archer">&#xe606;</span>Ubuntu</span>
-    
-        <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -777,23 +784,7 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-</body>
+    </body>
 </html>
 
 
