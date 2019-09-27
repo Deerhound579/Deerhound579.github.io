@@ -411,7 +411,7 @@ height:50vh;
 <p>In <code>fold_right</code>, you will notice that the value passed as the <code>init</code>argument is the same for every recursive invocation of <code>fold_right</code>: it’s passed all the way down to where it’s needed, at the right-most element of the list, then used there exactly once. But in <code>fold_left</code>, you will notice that at each recursive invocation, the value passed as the argument <code>acc</code> can be different.</p>
 </blockquote>
 <p>NOTE: In <code>fold_left</code>, its type is:</p>
-<p><code>(&#39;a -&gt; &#39;b -&gt; &#39;a) -&gt; &#39;a -&gt; &#39;b list -&gt; &#39;a = &lt;fun&gt;</code><br>In the example <code>rev</code> below,  the function is <code>fun a l</code> instead of <code>fun l a</code></p>
+<p><code>(&#39;a -&gt; &#39;b -&gt; &#39;a) -&gt; &#39;a -&gt; &#39;b list -&gt; &#39;a = &lt;fun&gt;</code><br>In the example <code>rev</code> below,  the function is <code>fun l a</code> instead of <code>fun a l</code></p>
 <h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* reverse a list *)</span></span><br><span class="line"><span class="keyword">let</span> rev lst = fold_left (<span class="keyword">fun</span> l a -&gt; a::l) <span class="literal">[]</span> lst</span><br><span class="line"></span><br><span class="line"><span class="comment">(* calculate the length of a list*)</span></span><br><span class="line"><span class="keyword">let</span> len lst = fold_left (<span class="keyword">fun</span> a _ -&gt; a+<span class="number">1</span>) <span class="number">0</span> lst</span><br><span class="line"></span><br><span class="line"><span class="comment">(* map in fold*)</span></span><br><span class="line"><span class="keyword">let</span> mapp f lst = fold_right (<span class="keyword">fun</span> e_of_l init -&gt; (f e_of_l)::init) lst <span class="literal">[]</span> ;;</span><br><span class="line"></span><br><span class="line"><span class="comment">(* filter in fold*)</span></span><br><span class="line"><span class="keyword">let</span> filterr f lst = fold_right (<span class="keyword">fun</span> e_of_l init -&gt; <span class="keyword">if</span> (f e_of_l) <span class="keyword">then</span> e_of_l::init <span class="keyword">else</span> init) lst <span class="literal">[]</span> ;;</span><br></pre></td></tr></table></figure>
 
     </article>
@@ -421,7 +421,7 @@ height:50vh;
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
             </p><p>Original：<a href="https://sixian.li/2019/01/17/fold-right-and-fold-left/">https://sixian.li/2019/01/17/fold-right-and-fold-left/</a>
             </p><p>Date：January 17th 2019, 12:00:00 am
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/01/17/fold-right-and-fold-left/">September 26th 2019, 9:45:38 pm</a> -->
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/01/17/fold-right-and-fold-left/">September 26th 2019, 9:47:05 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -784,7 +784,23 @@ jsonContent:
     
         <script src="/scripts/share.js" async></script>    
      
-    </body>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
 </html>
 
 
