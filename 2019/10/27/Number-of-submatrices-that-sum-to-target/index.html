@@ -22,7 +22,7 @@
     <meta name="description" content="Sixian Li's website">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Dot products and projections · sixian li</title>
+    <title>Number of submatrices that sum to target · sixian li</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">Sixian Li</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Dot products and projections</a>
+                <a href="#" class="post-name">Number of submatrices that sum to target</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Dot products and projections
+            Number of submatrices that sum to target
             <!-- 404 -->
             
         </h1>
@@ -266,14 +266,16 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="linear algebra">linear algebra</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="algorithm">algorithm</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="LeetCode">LeetCode</a>
     
 </div>
                 
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/05/12</span>
+                    <span class="post-intro-time">2019/10/27</span>
                     
                     <span class="shareWrapper">
                         <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -392,19 +394,53 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>Last year, I watched <a href="https://www.youtube.com/watch?v=LyGKycYT2v0\&amp;t=675s" target="_blank" rel="noopener">3Blue1Brown’s video</a> of dot products, but I only had a vague idea about their connection to projections. However, dot products showed up again and again in my math courses, so I decided to rewatch it. To my relief, it makes much more sense after <a href="https://www.mcgill.ca/study/2018-2019/courses/math-223" target="_blank" rel="noopener">MATH223</a>, and the connection is indeed “truly awesome” as 3Blue1Brown said in the video. </p>
-<p>Now, I’m going to reconstruct the whole idea to deepen my understanding. </p>
-<p>Detailed explanation can be found <a href="https://www.mathcha.io/editor/Eo4mc30i4QC5PFZM" target="_blank" rel="noopener">here</a>. I created the document with the help of Mathcha, an online math editor.</p>
-<p>To sum up, the geometric meaning of the dot product is projecting one vector onto the other one and multiplying by the length of the one being projected onto. In his video, he also talked about duality, a fascinating concept in math, so it’s definitely worth watching. Thanks again for the inspiration.</p>
+        <p>This article is a complete analysis of  <a href="https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/" target="_blank" rel="noopener">1074. Number of submatrices that sum to target</a> from LeetCode.</p>
+<h2 id="Brute-force"><a href="#Brute-force" class="headerlink" title="Brute force"></a>Brute force</h2><p>Consider every possible <code>[a, b]</code>(top-left position) and <code>[c, d]</code> (bottom-right position) pair, and check their sums. </p>
+<h3 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h3><p>Without loss of generality, we assume the given matrix is a square matrix with size <code>nxn</code>.</p>
+<p>For each <code>a</code>, we have <code>m</code> choices for <code>b</code>, and we have <code>n</code> choices for <code>a</code> —&gt; $n^2$.</p>
+<p>For each <code>[a, b]</code>, we have <code>m*n</code> pairs of <code>[c, d]</code>. —&gt; $n^2 * n^2 = n^4$</p>
+<p>However, each time we need to sum up all entries in the submatrix, giving us $O(n^6)$. This is unacceptable for large inputs.</p>
+<h2 id="Optimize-the-brute-force-strategy"><a href="#Optimize-the-brute-force-strategy" class="headerlink" title="Optimize the brute force strategy"></a>Optimize the brute force strategy</h2><p>Do we need to sum up all entries in a submatrix every time? Can we reuse some computations?</p>
+<p>Observation from a simple case: if the “height” of the matrix is 1, it is essentially an array. Let <code>sum[i]</code>  denote the sum of the subarray from index <code>0</code> to <code>i</code>. If we want to know <code>sum[3]</code>, we only need to add the third element to <code>sum[2]</code>.  So we can store <code>sum[i]</code>, and the addition only costs $O(1)$. </p>
+<p>We can extend the idea to 2D to reuse computations:</p>
+<p><img src="https://i.imgur.com/iW07t68.png" alt="Imgur"></p>
+<p>To get <code>sum[i, j]</code>, we use the following loop:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(rowsize):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(colsize):</span><br><span class="line">        <span class="keyword">if</span> i==<span class="number">0</span> &amp;&amp; j==<span class="number">0</span>:</span><br><span class="line">            ps[i][j] = matrix[i][j]</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> i==<span class="number">0</span> &amp;&amp; j&gt;<span class="number">0</span>: <span class="comment"># first row</span></span><br><span class="line">            ps[i][j] = p[i][j<span class="number">-1</span>] + matrix[i][j]</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> i&gt;<span class="number">0</span> &amp;&amp; j==<span class="number">0</span>: <span class="comment"># first col</span></span><br><span class="line">            ps[i][j] = p[i<span class="number">-1</span>][j] + matrix[i][j]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ps[i][j] = p[i<span class="number">-1</span>][j] + p[i][j<span class="number">-1</span>] - p[i<span class="number">-1</span>][j<span class="number">-1</span>] + matrix[i][j]</span><br></pre></td></tr></table></figure>
+<h3 id="Time-complexity-1"><a href="#Time-complexity-1" class="headerlink" title="Time complexity"></a>Time complexity</h3><p>Now, we can get the sum of any submatrix in $O(1)$ use the formula, but we still have $O(n^4)$ pairs of “top-left” and “bottom-right” which can’t be reduced further. The total cost is $O(n^4)$.</p>
+<h2 id="“Compress”-rows-to-1D"><a href="#“Compress”-rows-to-1D" class="headerlink" title="“Compress” rows to 1D"></a>“Compress” rows to 1D</h2><h3 id="Number-of-subarrays-that-sum-to-target"><a href="#Number-of-subarrays-that-sum-to-target" class="headerlink" title="Number of subarrays that sum to target"></a>Number of subarrays that sum to target</h3><p>It’s always easier to start with a simpler version of the problem and extend the idea.</p>
+<p>The 1D counterpart of this problem is “number of subarrays that sum to target”. </p>
+<p>The idea is from <a href="https://leetcode.com/problems/subarray-sum-equals-k/discuss/102106/Java-Solution-PreSum-%2B-HashMap" target="_blank" rel="noopener">the discussion of  560. Subarray Sum Equals K </a>. It is amazing how a key observation reduced the cost to $O(n)$. </p>
+<p>Let <code>sum[i, j]</code> denote the sum from index <code>i</code> to <code>j</code>.</p>
+<p>We observe that the any <code>sum[i, j]</code> can be broken into two parts:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\text{sum}[i, j] &= \text{sum}[0, j] - \text{sum}[i-1]\\
+\text{Assume sum}[i, j]& = k, \text{the given target}\\
+k &= \text{sum}[0, j] - \text{sum}[i-1]\\
+\text{sum}[i-1] &=\text{sum}[0, j]-k
+\end{align*}</script><p><img src="https://i.imgur.com/FU3Tmyp.png" alt="Imgur"></p>
+<p>The key observation is: #occurrences of  <code>sum[0, j]-k</code> is equivalent to the number of subarrays that sum to <code>k</code> among all possible subarrays between <code>0</code> and <code>j</code>. Let’s consider an example:</p>
+<p><img src="https://i.imgur.com/sKxlck4.png" alt="Imgur"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">subarraySum</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; int:</span></span><br><span class="line">        result, cur_sum = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="comment"># counter stores the value of a sum and its number of occurences</span></span><br><span class="line">        <span class="comment"># Adding &#123;0:1&#125; means if sum = k, sum-k = 0, increment by 1</span></span><br><span class="line">        counter = Counter(&#123;<span class="number">0</span>:<span class="number">1</span>&#125;)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            <span class="comment"># add the new number to the exsiting sum</span></span><br><span class="line">            <span class="comment"># cur_sum stores the sum of subarray[0, j]</span></span><br><span class="line">            cur_sum += nums[i]</span><br><span class="line">            <span class="comment"># increment the result by the number of subarrays that sum to cur_sum - k</span></span><br><span class="line">            result += counter[cur_sum - k]</span><br><span class="line">            <span class="comment"># store the current sum in counter</span></span><br><span class="line">            counter[cur_sum] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h3 id="From-1D-to-2D"><a href="#From-1D-to-2D" class="headerlink" title="From 1D to 2D"></a>From 1D to 2D</h3><p>If we can control one dimension, we will reduce the matrix problem to the simpler array problem. </p>
+<p>We first compute the prefix sum for each row, and we fix col <code>i</code> an col <code>j</code> to “convert” the submatrix to a subarray. </p>
+<p><img src="https://i.imgur.com/z5LT919.png" alt="Imgur"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSubmatrixSumTarget</span><span class="params">(self, A: List[List[int]], target: int)</span> -&gt; int:</span></span><br><span class="line">        result = <span class="number">0</span></span><br><span class="line">        rowsize, colsize = len(A), len(A[<span class="number">0</span>])</span><br><span class="line">        <span class="comment"># get prefix sum for each row</span></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> A:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>, colsize):</span><br><span class="line">                row[j] += row[j<span class="number">-1</span>]</span><br><span class="line">                </span><br><span class="line">        <span class="comment"># left and right col define the width of the matrix</span></span><br><span class="line">        <span class="keyword">for</span> leftcol <span class="keyword">in</span> range(colsize):</span><br><span class="line">            <span class="keyword">for</span> rightcol <span class="keyword">in</span> range(leftcol, colsize):</span><br><span class="line">                counter = Counter(&#123;<span class="number">0</span>:<span class="number">1</span>&#125;)</span><br><span class="line">                cur_sum = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> r <span class="keyword">in</span> range(rowsize):</span><br><span class="line">                    cur_sum += A[r][rightcol] - (A[r][leftcol<span class="number">-1</span>] <span class="keyword">if</span> leftcol&gt;<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line">                    result += counter[cur_sum - target]</span><br><span class="line">                    counter[cur_sum] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<h3 id="Time-complexity-2"><a href="#Time-complexity-2" class="headerlink" title="Time complexity"></a>Time complexity</h3><ol>
+<li>Get prefix sum for each row —&gt; $O(n^2)$</li>
+<li>For each pair of <code>(i, j)</code>, we need $O(n)$ to determine the submatrices. There are $O(n^2)$ pairs —&gt; $O(n^3)$</li>
+</ol>
+<p>Total cost: $O(n^3)$</p>
+<p>The similar idea of manipulating the equation can also be applied to any problem associated with “find the number of sub-patterns that satisfy a given condition”.</p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
-            </p><p>Original：<a href="https://sixian.li/2019/05/12/projections/">https://sixian.li/2019/05/12/projections/</a>
-            </p><p>Date：May 12th 2019, 5:36:20 pm
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/05/12/projections/">May 12th 2019, 6:22:56 pm</a> -->
+            </p><p>Original：<a href="https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/">https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/</a>
+            </p><p>Date：October 27th 2019, 1:20:59 pm
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/">October 27th 2019, 1:48:57 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -412,17 +448,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/08/12/Ubuntu18-04-remap-mouse-buttons/" title="Ubuntu 18.04 Remap mouse buttons">
-                    <div class="nextTitle">Ubuntu 18.04 Remap mouse buttons</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/04/07/tree/" title="Minimum spanning tree">
-                    <div class="prevTitle">Minimum spanning tree</div>
+                <a href="/2019/08/12/Ubuntu18-04-remap-mouse-buttons/" title="Ubuntu 18.04 Remap mouse buttons">
+                    <div class="prevTitle">Ubuntu 18.04 Remap mouse buttons</div>
                 </a>
             
         </li>
@@ -542,7 +573,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Brute-force"><span class="toc-number">1.</span> <span class="toc-text">Brute force</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-complexity"><span class="toc-number">1.1.</span> <span class="toc-text">Time complexity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optimize-the-brute-force-strategy"><span class="toc-number">2.</span> <span class="toc-text">Optimize the brute force strategy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-complexity-1"><span class="toc-number">2.1.</span> <span class="toc-text">Time complexity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#“Compress”-rows-to-1D"><span class="toc-number">3.</span> <span class="toc-text">“Compress” rows to 1D</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Number-of-subarrays-that-sum-to-target"><span class="toc-number">3.1.</span> <span class="toc-text">Number of subarrays that sum to target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#From-1D-to-2D"><span class="toc-number">3.2.</span> <span class="toc-text">From 1D to 2D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-complexity-2"><span class="toc-number">3.3.</span> <span class="toc-text">Time complexity</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

@@ -396,9 +396,9 @@ height:50vh;
 <h2 id="Max-edge-in-a-spanning-tree"><a href="#Max-edge-in-a-spanning-tree" class="headerlink" title="Max edge in a spanning tree"></a>Max edge in a spanning tree</h2><p>Let $T$ be a spanning tree of $G(V,E)$ and $L(T) = max_{(u,v)\in T}\ w[u, v]$, the longest edge in a spanning tree.</p>
 <p>$\text{Claim: The minimum spanning tree also minimizes L(T), that is, }$</p>
 <script type="math/tex; mode=display">
-L(MST) = min_{all\ T} L(T)</script><p>$\text{Proof:}​$</p>
+L(MST) = min_{all\ T} L(T)</script><p>$\text{Proof:}$</p>
 <p><img src="/images/mst.png" alt="mst.png"></p>
-<p>“$\geq​$”</p>
+<p>“$\geq$”</p>
 <p>MST$\in$T, so L(MST) cannot be less than the <strong>minimum</strong> L(T) of all T’s.</p>
 <p>“$\leq$”</p>
 <p>In the figure above, we assume the red arrow is the longest edge in MST. We construct the MST by adding the shortest “bridge” each time we cross two sets, $A$ and $V-A$. Thus, all other grey edges are <strong>longer</strong> than or equal to the red edge. These grey edges are in some other spanning trees.</p>
@@ -411,8 +411,8 @@ L(MST) = min_{all\ T} L(T)</script><p>$\text{Proof:}​$</p>
         <div class="license-wrapper">
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
             </p><p>Original：<a href="https://sixian.li/2019/04/07/tree/">https://sixian.li/2019/04/07/tree/</a>
-            </p><p>Date：April 7th 2019, 10:44:30 am
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/04/07/tree/">May 12th 2019, 5:50:08 pm</a> -->
+            </p><p>Date：April 7th 2019, 10:44:30 pm
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/04/07/tree/">October 27th 2019, 1:30:43 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -429,7 +429,7 @@ L(MST) = min_{all\ T} L(T)</script><p>$\text{Proof:}​$</p>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/03/24/Streams/" title="Stream">
+                <a href="/2019/03/25/Streams/" title="Stream">
                     <div class="prevTitle">Stream</div>
                 </a>
             
@@ -649,9 +649,12 @@ top:50vh;
     
     
     
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 8
+        Total : 9
         </div>
         <!-- search  -->
         
@@ -667,7 +670,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/11</span><a class="archive-post-title" href="/2019/08/11/Ubuntu18-04-remap-mouse-buttons/">Ubuntu 18.04 Remap mouse buttons</a>
+            <span class="archive-post-date">10/27</span><a class="archive-post-title" href="/2019/10/27/Number-of-submatrices-that-sum-to-target/">Number of submatrices that sum to target</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/12</span><a class="archive-post-title" href="/2019/08/12/Ubuntu18-04-remap-mouse-buttons/">Ubuntu 18.04 Remap mouse buttons</a>
         </li>
     
     
@@ -682,7 +690,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/24</span><a class="archive-post-title" href="/2019/03/24/Streams/">Stream</a>
+            <span class="archive-post-date">03/25</span><a class="archive-post-title" href="/2019/03/25/Streams/">Stream</a>
         </li>
     
     
@@ -692,12 +700,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/22</span><a class="archive-post-title" href="/2019/01/22/Binding/">Binding & Closure</a>
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href="/2019/01/23/Binding/">Binding & Closure</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/20</span><a class="archive-post-title" href="/2019/01/20/Inductive-Data-Types/">Inductive Data Types</a>
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href="/2019/01/21/Inductive-Data-Types/">Inductive Data Types</a>
         </li>
     
     
@@ -710,11 +718,13 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
-    
         <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
     
+        <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
+    
         <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
+    
+        <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
     
         <span class="sidebar-tag-name" data-tags="Ubuntu"><span class="iconfont-archer">&#xe606;</span>Ubuntu</span>
     
@@ -798,8 +808,7 @@ jsonContent:
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
 
