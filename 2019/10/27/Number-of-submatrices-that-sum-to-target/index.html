@@ -398,8 +398,8 @@ height:50vh;
 <h2 id="Brute-force"><a href="#Brute-force" class="headerlink" title="Brute force"></a>Brute force</h2><p>Consider every possible <code>[a, b]</code>(top-left position) and <code>[c, d]</code> (bottom-right position) pair, and check their sums. </p>
 <h3 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h3><p>Without loss of generality, we assume the given matrix is a square matrix with size <code>nxn</code>.</p>
 <p>For each <code>a</code>, we have <code>m</code> choices for <code>b</code>, and we have <code>n</code> choices for <code>a</code> —&gt; $n^2$.</p>
-<p>For each <code>[a, b]</code>, we have <code>m*n</code> pairs of <code>[c, d]</code>. —&gt; $n^2 * n^2 = n^4$</p>
-<p>However, each time we need to sum up all entries in the submatrix, giving us $O(n^6)$. This is unacceptable for large inputs.</p>
+<p>For each <code>[a, b]</code>, we have <code>m*n</code> pairs of <code>[c, d]</code>. —&gt; <script type="math/tex">n^2 * n^2 = n^4</script></p>
+<p>However, each time we need to sum up all entries in the submatrix, giving us <script type="math/tex">O(n^6)</script>. This is unacceptable for large inputs.</p>
 <h2 id="Optimize-the-brute-force-strategy"><a href="#Optimize-the-brute-force-strategy" class="headerlink" title="Optimize the brute force strategy"></a>Optimize the brute force strategy</h2><p>Do we need to sum up all entries in a submatrix every time? Can we reuse some computations?</p>
 <p>Observation from a simple case: if the “height” of the matrix is 1, it is essentially an array. Let <code>sum[i]</code>  denote the sum of the subarray from index <code>0</code> to <code>i</code>. If we want to know <code>sum[3]</code>, we only need to add the third element to <code>sum[2]</code>.  So we can store <code>sum[i]</code>, and the addition only costs $O(1)$. </p>
 <p>We can extend the idea to 2D to reuse computations:</p>
@@ -440,7 +440,7 @@ k &= \text{sum}[0, j] - \text{sum}[i-1]\\
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
             </p><p>Original：<a href="https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/">https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/</a>
             </p><p>Date：October 27th 2019, 1:20:59 pm
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/">October 27th 2019, 1:48:57 pm</a> -->
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/10/27/Number-of-submatrices-that-sum-to-target/">October 27th 2019, 2:38:25 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -675,8 +675,6 @@ top:50vh;
     
     
     
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 9
@@ -743,15 +741,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
-    
-        <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
-    
         <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
     
         <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
     
+        <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
+    
         <span class="sidebar-tag-name" data-tags="Ubuntu"><span class="iconfont-archer">&#xe606;</span>Ubuntu</span>
+    
+        <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -833,24 +831,8 @@ jsonContent:
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config("");
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="custom_mathjax_source">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
 
