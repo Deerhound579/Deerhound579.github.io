@@ -394,7 +394,76 @@ height:50vh;
     <article class="article-entry">
         <p>Last year, I watched <a href="https://www.youtube.com/watch?v=LyGKycYT2v0\&amp;t=675s" target="_blank" rel="noopener">3Blue1Brown’s video</a> of dot products, but I only had a vague idea about their connection to projections. However, dot products showed up again and again in my math courses, so I decided to rewatch it. To my relief, it makes much more sense after <a href="https://www.mcgill.ca/study/2018-2019/courses/math-223" target="_blank" rel="noopener">MATH223</a>, and the connection is indeed “truly awesome” as 3Blue1Brown said in the video. </p>
 <p>Now, I’m going to reconstruct the whole idea to deepen my understanding. </p>
-<p>Detailed explanation can be found <a href="https://www.mathcha.io/editor/Eo4mc30i4QC5PFZM" target="_blank" rel="noopener">here</a>. I created the document with the help of Mathcha, an online math editor.</p>
+<p>I created images with the help of <a href="https://www.mathcha.io/" target="_blank" rel="noopener">Mathcha</a>, an online math editor.</p>
+<p><img src="https://i.imgur.com/exMKCKO.png" alt="Imgur"></p>
+<p> Let $\displaystyle \vec{i} , \vec{j}$ be unit vectors in $\displaystyle \mathbb{R}^{2}$, and let $\displaystyle \vec{u}  =\begin{bmatrix} u_{x}\ u_{y} \end{bmatrix}   $be a unit vector on line $\displaystyle L$.</p>
+<p><img src="https://i.imgur.com/oCsNwzb.png" alt="Imgur"></p>
+<p> But $\displaystyle |  proj_{\vec{i}}  \vec{u}  | $ is just the x-coordinate of $\displaystyle \vec{u} , u_{x}$.  Now, if we want to know the orthogonal projection of any vector in $\displaystyle \mathbb{R}^{2}$ onto line $\displaystyle L$, we only need to find where $\displaystyle \vec{i}  , \vec{j}  $land. </p>
+<p> Define the transformation $\displaystyle T: \mathbb{R}^{2}  \rightarrow \mathbb{R}$ as </p>
+<script type="math/tex; mode=display">
+\begin{equation*}
+T(\begin{bmatrix}
+x\\
+y
+\end{bmatrix}) \ =\ \begin{bmatrix}
+u_{x} & u_{y}
+\end{bmatrix}\begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+\end{equation*}</script><p> which is the orthogonal projection onto line $\displaystyle L$. </p>
+<p>First, is it linear? Let $\displaystyle \vec{v} , \vec{w}  \in \mathbb{R}^{2} , c \in \mathbb{R} .$  </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+T\left(\vec{0}\right) \  & =\ \begin{bmatrix}
+u_{x} & u_{y}
+\end{bmatrix}\begin{bmatrix}
+0\\
+0
+\end{bmatrix} \ =\ 0\\
+ & \\
+T\left( c\vec{v} +\vec{w}\right) & =\ \begin{bmatrix}
+u_{x} & u_{y}
+\end{bmatrix}\begin{bmatrix}
+cv_{x} +w_{x}\\
+cv_{y} +w_{y}
+\end{bmatrix}\\
+ & =\ u_{x}( cv_{x} +w_{x}) \ +\ u_{y}( cv_{y} +w_{y})\\
+ & =\ cv_{x} u_{x} \ +\ cv_{y} u_{y} +\ u_{x} w_{x} \ +u_{y} w_{y}\\
+ & \\
+cT\left(\vec{v}\right) +T\left(\vec{w}\right) & =c\ \begin{bmatrix}
+u_{x} & u_{y}
+\end{bmatrix}\begin{bmatrix}
+v_{x}\\
+v_{y}
+\end{bmatrix} \ +\ \begin{bmatrix}
+u_{x} & u_{y}
+\end{bmatrix}\begin{bmatrix}
+w_{x}\\
+w_{y}
+\end{bmatrix}\\
+ & =\ c( u_{x} v_{x} +u_{y} v_{y}) \ +\ ( u_{x} w_{x} +u_{y} w_{y)}
+\end{align*}</script><p> It is easy to see that (1) = (2), so it is linear. For any vector $\displaystyle \begin{bmatrix} x\ y \end{bmatrix} \in \mathbb{R}^{2} , $ </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+T\left(\begin{bmatrix}
+x\\
+y
+\end{bmatrix}\right) & =T\left( x\vec{i} \ +y\vec{j}\right)\\
+ & =\ xT\left(\vec{i}\right) +yT\left(\vec{j}\right)\\
+ & =\ xu_{x} \ +\ yu_{y}
+\end{align*}</script><p> which is the same as taking the dot product $\displaystyle \begin{bmatrix} x\ y \end{bmatrix} \cdot \begin{bmatrix} u_{x}\ u_{y} \end{bmatrix}$. What if $\displaystyle \vec{u}$ is not the unit vector? Then the unit vector will be $\displaystyle \vec{u}\frac{1}{|| \vec{u}  ||}$. So our matrix encoding the projection is now $\displaystyle \begin{bmatrix} \frac{u_{x}}{|| \vec{u}  ||} &amp; \frac{u_{y}}{|| \vec{u}  ||} \end{bmatrix}$. </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+T\left(\begin{bmatrix}
+x\\
+y
+\end{bmatrix}\right) \  & =\frac{xu_{x}}{||\ \vec{u} \ ||} \ +\ \frac{yu_{y}}{||\ \vec{u} \ ||}\\
+\ ||\ \vec{u} \ ||\ T\left(\begin{bmatrix}
+x\\
+y
+\end{bmatrix}\right) \  & =xu_{x} \ +\ yu_{y}
+\end{align*}</script><p> The left hand is multiplying the projection of $\displaystyle \begin{bmatrix} x\ y \end{bmatrix}$ onto $\displaystyle L$ by the length of $\displaystyle \vec{u}$, and the right hand side is $\displaystyle \begin{bmatrix} x\ y \end{bmatrix} \cdot \begin{bmatrix} u_{x}\ u_{y} \end{bmatrix}$</p>
 <p>To sum up, the geometric meaning of the dot product is projecting one vector onto the other one and multiplying by the length of the one being projected onto. In his video, he also talked about duality, a fascinating concept in math, so it’s definitely worth watching. Thanks again for the inspiration.</p>
 
     </article>
@@ -404,7 +473,7 @@ height:50vh;
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
             </p><p>Original：<a href="https://sixian.li/2019/05/12/projections/">https://sixian.li/2019/05/12/projections/</a>
             </p><p>Date：May 12th 2019, 5:36:20 pm
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/05/12/projections/">May 12th 2019, 6:22:56 pm</a> -->
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/05/12/projections/">November 5th 2019, 11:28:42 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -640,6 +709,14 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 9
@@ -706,13 +783,13 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
-    
-        <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
+        <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
     
         <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
     
-        <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
+        <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
+    
+        <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
     
         <span class="sidebar-tag-name" data-tags="Ubuntu"><span class="iconfont-archer">&#xe606;</span>Ubuntu</span>
     
@@ -780,25 +857,9 @@ jsonContent:
     </div>
     <!-- async load share.js -->
     
-        <script src="/scripts/share.js" async></script>    
+        <script src="/scripts/share.js" async></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->    
      
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</body>
+    </body>
 </html>
 
 
