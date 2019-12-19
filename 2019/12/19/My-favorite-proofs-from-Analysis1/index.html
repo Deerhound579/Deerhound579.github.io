@@ -22,7 +22,7 @@
     <meta name="description" content="Sixian Li's website">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Higher-order functions · sixian li</title>
+    <title>My favorite proofs from Analysis1 · sixian li</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -217,7 +217,7 @@
                 <a href="/">Sixian Li</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Higher-order functions</a>
+                <a href="#" class="post-name">My favorite proofs from Analysis1</a>
             </div>
     </div>
     
@@ -247,7 +247,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Higher-order functions
+            My favorite proofs from Analysis1
             <!-- 404 -->
             
         </h1>
@@ -266,14 +266,14 @@ height:50vh;
                 
                     <div class="post-intro-tags">
     
-        <a class="post-tag" href="javascript:void(0);" data-tags="functional programming">functional programming</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags="math">math</a>
     
 </div>
                 
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/02/06</span>
+                    <span class="post-intro-time">2019/12/19</span>
                     
                     <span class="shareWrapper">
                         <span class="iconfont-archer shareIcon">&#xe71d;</span>
@@ -392,49 +392,85 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="Higher-order-functions"><a href="#Higher-order-functions" class="headerlink" title="Higher-order functions"></a>Higher-order functions</h1><h2 id="Levels-of-abstraction"><a href="#Levels-of-abstraction" class="headerlink" title="Levels of abstraction"></a>Levels of abstraction</h2><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sumInts(a,b) = <span class="keyword">if</span> (a &gt; b) <span class="keyword">then</span> <span class="number">0</span> <span class="keyword">else</span> a + sumInts(a+<span class="number">1</span>,b);;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sumSquares(a,b) = <span class="keyword">if</span> (a &gt; b) <span class="keyword">then</span> <span class="number">0</span> <span class="keyword">else</span> (a*a) + sumSquares(a+<span class="number">1</span>,b);;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sumCubes(a,b) = <span class="keyword">if</span> (a &gt; b) <span class="keyword">then</span> <span class="number">0</span> <span class="keyword">else</span> (a*a*a) + sumCubes(a+<span class="number">1</span>,b);;</span><br></pre></td></tr></table></figure>
-<p>It’s not hard to see that the only difference here is the operation on the item <code>a</code> each time. It’s natural to abstract this operation out:</p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* f is a function to be applied to our data, so the sum function is more flexible *)</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sum (f, lo, hi) = </span><br><span class="line">	<span class="keyword">if</span> lo &gt; hi <span class="keyword">then</span> <span class="number">0</span></span><br><span class="line">	<span class="keyword">else</span> (f lo) + sum (f, lo+<span class="number">1</span>, hi)</span><br></pre></td></tr></table></figure>
-<p>The problem here is we are restricted to <code>+1</code> each time. What if we want the step to be <code>2</code>? Should we write another function?</p>
-<p>No. We add an <code>increment</code>:</p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">rec</span> sumInc (f, lo, hi, inc) = </span><br><span class="line">	<span class="keyword">if</span> lo &gt; hi <span class="keyword">then</span> <span class="number">0</span></span><br><span class="line">	<span class="keyword">else</span> (f lo) + sumInc (f, (inc lo), hi)</span><br></pre></td></tr></table></figure>
-<p>Another problem: what if I want to calculate the product instead of the sum? The only difference between those two operations are just the operator <code>+</code> and <code>*</code>. From what we did above, we abstract this operator again to create a generic combiner. We also need a <code>unit</code> as our base case since base cases vary from operations (<code>0</code> for <code>sum</code>, <code>1</code> for <code>product</code>, for example). Maybe <code>initial</code> is a more appropriate name than <code>unit</code>.</p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">(* op: a binary operation</span></span><br><span class="line"><span class="comment"> * inc: a unary operation, the incrementer</span></span><br><span class="line"><span class="comment"> * f: a function to be applied to data each time</span></span><br><span class="line"><span class="comment"> * lo, hi: the range</span></span><br><span class="line"><span class="comment"> * unit: base case</span></span><br><span class="line"><span class="comment"> *)</span></span><br><span class="line"><span class="keyword">let</span> comb (op, f, lo, hi, inc, <span class="built_in">unit</span>) = </span><br><span class="line">	<span class="comment">(* The professor used the name "result", but I think "acc" for "accumulator" is easier to understand *)</span></span><br><span class="line">	<span class="keyword">let</span> <span class="keyword">rec</span> helper (a, acc) = </span><br><span class="line">		<span class="keyword">if</span> a &gt; hi <span class="keyword">then</span> acc <span class="comment">(* This is not lo &gt; hi anymore because we are updating a each time *)</span></span><br><span class="line">		<span class="keyword">else</span> helper ((inc a), (op (a acc)) <span class="comment">(* It's like a prefix expression, think about [+ 1 2] *)</span></span><br><span class="line">	<span class="keyword">in</span></span><br><span class="line">	helper (lo, <span class="built_in">unit</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="How-does-one-compute-with-functions"><a href="#How-does-one-compute-with-functions" class="headerlink" title="How does one compute with functions"></a>How does one compute with functions</h2><p><code>f arg</code>: f is <strong>applied</strong> to arg</p>
-<p>Assume <code>f</code> expects one input:</p>
-<p><code>fun x -&gt; &lt;body&gt;</code></p>
-<p>During application, every occurrence of <code>x</code> in <code>&lt;body&gt;</code> will be replaced by <u>the value of the arg</u> and their evaluation of the body proceeds. This is called the <em>substitution method</em>.</p>
-<p>However, this is just a conceptual picture. What actually happens is that the environment frames are set up.</p>
-<p>In <code>(fun (n, m) -&gt; n + m) (1+1, 3)</code>, <code>1+1</code> is evaluated before passing the value <code>2</code> into the function.</p>
-<p>This is <em>call-by-value</em>, as opposed to <em>call-by-name</em> where the expression is passed into the function then gets evaluated later.</p>
-<h2 id="Currying"><a href="#Currying" class="headerlink" title="Currying"></a>Currying</h2><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> twice f = <span class="keyword">fun</span> x -&gt; f (f x);;</span><br><span class="line"><span class="comment">(* same *)</span></span><br><span class="line"><span class="keyword">let</span> twice = <span class="keyword">fun</span> f -&gt; <span class="keyword">fun</span> x -&gt; f (f x);;</span><br></pre></td></tr></table></figure>
-<p>How about <code>twice twice</code>?</p>
-<ol>
-<li><p><code>(fun f -&gt; fun x -&gt; f (f x)) twice</code> The <code>twice</code> function takes <code>twice</code> as its input.</p>
-</li>
-<li><p>f is substituted by <code>twice</code>. So the it’s now: <code>(fun x -&gt; twice (twice x))</code></p>
-</li>
-<li><p><code>twice</code> takes a function as its input and returns a function which is “apply the input function twice”. So when we do </p>
-<p><code>(fun x -&gt; twice (twice x)) f</code>, we’ll get a function that applies <code>f</code> four times.</p>
-</li>
-</ol>
-<h3 id="Composition-of-functions"><a href="#Composition-of-functions" class="headerlink" title="Composition of functions"></a>Composition of functions</h3><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> compose (f, g) = <span class="keyword">fun</span> x -&gt; g (f x);;</span><br></pre></td></tr></table></figure>
-<h3 id="Example-Integrals-and-Derivatives"><a href="#Example-Integrals-and-Derivatives" class="headerlink" title="Example: Integrals and Derivatives"></a>Example: Integrals and Derivatives</h3><h4 id="Integral"><a href="#Integral" class="headerlink" title="Integral"></a>Integral</h4><p>We calculate the integral by adding the areas of the strips together.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Integral_approximations.svg/220px-Integral_approximations.svg.png" alt="Image result for integral"></p>
-<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> iterSum (f, lo, hi, inc) = </span><br><span class="line">	<span class="keyword">let</span> <span class="keyword">rec</span> helper (a, acc) = </span><br><span class="line">		<span class="keyword">if</span> a &gt; hi <span class="keyword">then</span> acc</span><br><span class="line">		<span class="keyword">else</span> helper ((inc a), (f a) +. acc) <span class="comment">(* apply the function to a *)</span></span><br><span class="line">	<span class="keyword">in</span></span><br><span class="line">	helper (lo, <span class="number">0.0</span>)</span><br><span class="line">		</span><br><span class="line"><span class="keyword">let</span> integral (f, lo, hi, dx) = </span><br><span class="line">	<span class="keyword">let</span> delta x = x + dx <span class="keyword">in</span> <span class="comment">(* incrementer for x *)</span></span><br><span class="line">	dx *. itersum (f, lo, hi, delta)</span><br></pre></td></tr></table></figure>
-<h4 id="Derivative"><a href="#Derivative" class="headerlink" title="Derivative"></a>Derivative</h4><p>Formula for derivative is:</p>
+        <p>I’ve encountered a lot of proofs from <a href="https://www.mcgill.ca/study/2019-2020/courses/math-254" target="_blank" rel="noopener">MATH254</a>, an introductory real analysis course. From my experience, most of the knowledge vanished the moment I walked out of the final exam room. But some proofs are just so elegant that forgetting them pains me. </p>
+<p>This post is a collection of the neatest ones from my perspective. Besides reconstructing proofs, I also try to explain them in my own words to help you and my future self follow the line of thought.</p>
+<h2 id="Triangle-inequality-In-mathbb-R-2"><a href="#Triangle-inequality-In-mathbb-R-2" class="headerlink" title="Triangle inequality (In $\mathbb{R}^2$)"></a>Triangle inequality (In $\mathbb{R}^2$)</h2><p>Probably the most important inequality in this course.</p>
+<p>$|x+y|\leq|x|+|y|$</p>
+<h3 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h3><p>First, we prove the claim:$ |x|\leq a \iff -a\leq x\leq a\\$</p>
 <script type="math/tex; mode=display">
-f'(x) = lim_{\Delta x \rightarrow 0} \frac{f(x+\Delta x) - f(x)}{\Delta x}</script><figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> derivative (f, dx) = </span><br><span class="line">  <span class="keyword">fun</span> x -&gt; (((f x) +. dx) -. (f x)) /. dx <span class="comment">(* returns the function of its derivative*)</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">(* type of this function is: ((float -&gt; float)*float) -&gt; (float -&gt; float))</span></span><br></pre></td></tr></table></figure>
-<p><strong>NOTE</strong>: <code>int -&gt; (int -&gt; int)</code> is the same as <code>int -&gt; int -&gt; int</code>. Both of them takes two <code>int</code> inputs and returns an <code>int</code>. But that is different from <code>(int -&gt; int) -&gt; int</code> which expects a <strong>function</strong> as its input and returns an integer. </p>
+\text{Here I only prove } ``\Rightarrow" \text{direction.}\\ \text{The other direction can be easily obtained by "opening" the absolute value.}\\
+\begin{align*}
+&\text{Case1. } x\geq 0 \\ 
+&x = |x|\leq a, x\geq0 \Rightarrow a\geq0\Rightarrow -a \leq 0\leq x\\
+\Rightarrow &-a \leq x \leq a\\
+&\text{Case2. } x\lt 0 \\
+& -x =|x|\leq a \Rightarrow x\geq-a\Rightarrow x<0\leq a\\
+\Rightarrow &-a \leq x \leq a\\
+\end{align*}\\</script><p>For the triangle inequality:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+|x|&\leq |x| \Rightarrow -|x| \leq x\leq|x|\\
+|y|&\leq |y| \Rightarrow -|y| \leq y\leq|y|\\
+-|x|-|y|&\leq x+y \leq|x|+|y|\\
+\Rightarrow -(|x|+|y|)&\leq x+y \leq|x|+|y|\\
+\Rightarrow |x+y| &\leq |x|+|y| \text{ by the claim above} \ \square
+\end{align*}</script><h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><p>The very obvious $|x|\leq|x|$ may be hard to come up with. When you have an equality, think about inequalities it may give you. The generalization for $\mathbb{R^n}$ can be proved by induction.</p>
+<h2 id="mathbb-Q-is-dense-in-mathbb-R"><a href="#mathbb-Q-is-dense-in-mathbb-R" class="headerlink" title="$\mathbb{Q}$ is dense in $\mathbb{R}$"></a>$\mathbb{Q}$ is dense in $\mathbb{R}$</h2><p>That is, for any $x, y \in \mathbb{R}, x&lt;y, \exists q \in \mathbb{Q}$ such that $x &lt; q &lt; y$ .  Equivalently, there are infinite rational numbers between any two real numbers.</p>
+<h3 id="Proof-1"><a href="#Proof-1" class="headerlink" title="Proof"></a>Proof</h3><p>Let $n\in\mathbb{N},0&lt;\frac{1}{n} &lt; y-x \iff n&gt;\frac{1}{y-x}$ by the <a href="http://mathonline.wikidot.com/the-archimedean-property" title="No infinitely large  or infinitely small elements" target="_blank" rel="noopener">Archimedean property</a>.</p>
+<p>Consider the set $ S=\{k \in \mathbb{N}: \frac{k}{n}<x\}$. this set is finite, so its complement infinite, non-empty especially. by the [well-ordering principle][2], $\mathbb{r}\setminus s="\{k\in\mathbb{N}:\frac{k}{n}">x\}$ has a least element. </x\}$.></p>
+<p>Let $m$ be the smallest natural number with $\frac{m}{n} &gt; x$, especially $\frac{m-1}{n}&lt; x$.  $m, n \in \mathbb{N}, \frac{m}{n} \in \mathbb{Q}$.</p>
+<p><strong>Claim:</strong> $x&lt;\frac{m}{n}&lt;y$ is the number we want.</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\frac{m}{n} =\frac{m-1}{n} + \frac{1}{n} < x+y-x =y\\
+&\frac{m}{n} >x \text{ by our choice of m}\\
+\Rightarrow &\  x<\frac{m}{n}<y \ \square
+\end{align*}</script><h3 id="Notes-1"><a href="#Notes-1" class="headerlink" title="Notes"></a>Notes</h3><p>The choice of $\frac{1}{n}&lt;y-x$ in the first step seems mysterious, but everything follows that is easy to understand. The reason why we made this choice is: $\frac{1}{n}$ is the step size, if it’s greater than $y-x$, assume $z&lt;x, z+\frac{1}{n}$ may be greater than $y$. That is, we may go past $y$ directly, which is bad for finding a number <strong>between</strong> $x, y$.</p>
+<p>Of course, the set $S =\{k\in\mathbb{N}:  \frac{k}{n}<x\} $ may be empty ( $\frac{1}{n}>x$ ), but that doesn’t matter. $\mathbb{R}\setminus S$  is “more” infinite. The well-ordering principle holds as long as $\mathbb{R}\setminus S$ is non-empty. Using infinity to show non-emptiness may seem like an overkill, but interestingly, this kind of “overkill” happens all the time. It’s easier to get information from a stronger statement.</x\}></p>
+<blockquote>
+<p>We require f to be continuous on the whole domain, but actually we only used continuity at a single point in this proof. — My analysis professor</p>
+</blockquote>
+<h2 id="Every-continuous-function-on-a-compact-domain-is-uniformly-continuous"><a href="#Every-continuous-function-on-a-compact-domain-is-uniformly-continuous" class="headerlink" title="Every continuous function on a compact domain is uniformly continuous."></a>Every continuous function on a compact domain is uniformly continuous.</h2><h3 id="Proof-2"><a href="#Proof-2" class="headerlink" title="Proof"></a>Proof</h3><p>Let $f: A→ \mathbb{R}$ be continuous.  Let $\displaystyle \epsilon  &gt;0,$ then $\displaystyle \forall  x\in  A, \exists \delta _{x}  &gt;0:|x-u|&lt; \delta _{x} \Longrightarrow  |f(  x)  -f(  u) | &lt;  \frac{1}{2} \epsilon $ (1) </p>
+<p>Consider the neighborhoods $\displaystyle V_{\frac{1}{2} \delta _{x} }( x) , \forall x\in A$. Then, $\displaystyle C :=\{V_{\frac{1}{2} \delta _{x} }( x) :x\in A\}$ is an open cover of A since an arbitrary union of open sets are still open. A is compact, so $\displaystyle C$ has a finite subcover, $\displaystyle U:=\{V_{\frac{1}{2} \delta _{x_{k} }}( x_{1}) , \cdots ,V_{\frac{1}{2} \delta _{x_{k} }}( x_{k})\}$ where $\displaystyle x_{1} ,\cdots ,x_{k} \in A$</p>
+<p>Let $\displaystyle x, u \in A$ be arbitrary. We want to show $\displaystyle |x-u|&lt; \delta \Longrightarrow |f( x) -f( u) |&lt; \epsilon $. For now, we only know $f$ behaves nicely locally(within each neighborhood around $\displaystyle x_{i} , 1\leqslant i\leqslant k$ ), but uniformly continuity is a global property. </p>
+<p><u>Intuition</u>: If $\displaystyle x, u$ are in the same neighborhood around $\displaystyle x_{i}$, we can utilize the nice, local behavior. The problem is that $\displaystyle \delta _{x_{i} }$ depends on $\displaystyle x_{i}$, so the required distance varies in different locations on the domain. Can we find a $\displaystyle \delta $ that makes $\displaystyle x$ and $\displaystyle u$ “close enough” to be considered locally, no matter where they are? </p>
+<p>Yes, we can. Why? Because $\displaystyle U$ is finite. </p>
+<p> Let $\displaystyle \delta :=\min\left\{\frac{1}{2} \delta _{ {x}_{1} } ,\cdots ,\frac{1}{2} \delta _{ {x}_{k} }\right\}$. $\displaystyle U$ covers A, so $\displaystyle x \in V_{\frac{1}{2} \delta _{ {x}_{i} }}( x_{i})  $for some $\displaystyle x_{i} \in A$. </p>
+<script type="math/tex; mode=display">
+\begin{gather*}
+\begin{aligned}
+|x-x_{i} | & < \frac{1}{2} \delta _{ {x}_{i} } < \delta _{ {x}_{i} } \Longrightarrow |f( x) -f( x_{i}) |< \frac{1}{2} \epsilon \ \text{by (1)}\\
+|u-x_{i} | & =|u-x+x-x_{i} |\\
+ \text{triangle ineq} & \leq |u-x|+|x-x_{i} |< \delta +\frac{1}{2} \delta _{ {x}_{i} } \leq \frac{1}{2} \delta _{ {x}_{i} } +\frac{1}{2} \delta _{ {x}_{i} } =\delta _{ {x}_{i} }\\
+|u-x_{i} |< \delta _{ {x}_{i} }& \Longrightarrow |f( u) -f( x_{i}) |< \frac{1}{2} \epsilon \\
+|f( x) -f( u) | & =|f( x) -f( x_{i}) +f( x_{i}) -f( u) |\\
+ & \leq |f( x) -f( x_{i}) |+|f( x_{i}) -f( u) |\\
+ & < \frac{1}{2} \epsilon +\frac{1}{2} \epsilon =\epsilon \ \square \\
+
+\end{aligned}\\
+\end{gather*}</script><h3 id="Notes-2"><a href="#Notes-2" class="headerlink" title="Notes"></a>Notes</h3><p> If $\displaystyle U$ is infinite, we are unable to take the minimum of all neighborhoods. To recap, our goal is to find a $\displaystyle \delta $ that is “close enough” for arbitrary $\displaystyle x, u \in A$ such that $\displaystyle |f( x) -f( u) |&lt; \epsilon $. The idea is to use $\displaystyle x_{i}$ as a bridge between $\displaystyle x$ and $\displaystyle u$ since we only know how $\displaystyle f$ behaves near each $\displaystyle x_{i}$. Choosing $\displaystyle \frac{1}{2} \delta _{ {x}_{i} }$neighborhoods ensures $\displaystyle x, u$ are in the same neighborhood of $\displaystyle x_{i}$. This enables us to rely on $\displaystyle f$’s local behavior. </p>
+<h2 id="Bolzano-Weierstrass-Theorem-Every-bounded-sequence-in-mathbb-R-has-a-convergent-subsequence"><a href="#Bolzano-Weierstrass-Theorem-Every-bounded-sequence-in-mathbb-R-has-a-convergent-subsequence" class="headerlink" title="Bolzano-Weierstrass Theorem: Every bounded sequence in $\mathbb{R}$ has a convergent subsequence"></a>Bolzano-Weierstrass Theorem: Every bounded sequence in $\mathbb{R}$ has a convergent subsequence</h2><p>The proof is only for $\mathbb{R}$, but the theorem also holds in $\mathbb{R^n}$ and $\mathbb{C}^n$.</p>
+<p><strong>Definition:</strong>  Let $(x_n)$ be a sequence of real numbers. $x_N$ is called a <em>peak</em> if $\forall n\geq N, x_N\geq x_n$ i.e., $x_N$ is the largest term in the sequence starting from it.</p>
+<h3 id="Lemma-Every-sequence-of-real-numbers-has-a-monotone-subsequence"><a href="#Lemma-Every-sequence-of-real-numbers-has-a-monotone-subsequence" class="headerlink" title="Lemma: Every sequence of real numbers has a monotone subsequence"></a>Lemma: Every sequence of real numbers has a monotone subsequence</h3><h4 id="Proof-3"><a href="#Proof-3" class="headerlink" title="Proof"></a>Proof</h4><p>Let $(x_n)$ be a sequence of real numbers. There are two cases regrading the number of peaks:</p>
+<p><strong>Case1:</strong> $(x_n)$ has infinitely many peaks. We can find a subsequence $(x_{n_{k} })$ consisting of peaks. $(x_{n_{1} })$ is a peak, so $x_{n_{1} } \geq x_n, \forall n\geq n_1$. Thus, $x_{n_{1} }\geq x_{n_{2} }$. Similarly, $x_{n_{2} }$ is a peak, so $x_{n_{2} } \geq x_{n_{3} } \geq x_{n_{4} } \geq \cdots$, etc.</p>
+<p>The sequence is monotone increasing. </p>
+<p><strong>Case2: </strong> $(x_n)$ has finitely many peaks. Then, we choose our subsequence after the last peak. Let $x_N$ be the last peak. For $x_n, n\geq N, \exists x_m, m\gt n, \text{such that}  x_m \gt x_n$ since $x_n$ is not a peak. Similarly, $x_m$ is not a peak, so $\exists x_k, k\gt m, \text{such that}  x_k \gt x_m$. Following this procedure, we end up with a monotone increasing subsequence.</p>
+<p>In both cases, there exists a monotone subsequence in $(x_n)$, so the lemma is proved. </p>
+<h3 id="Proof-of-the-theorem"><a href="#Proof-of-the-theorem" class="headerlink" title="Proof of the theorem"></a>Proof of the theorem</h3><p>$(x_n)$ is bounded. By lemma, $(x_n)$ has a monotone subsequence $(x_{n_{k} })$. By the [monotone convergence theorem][3], the sequence converges $\square$.</p>
+<h3 id="Notes-3"><a href="#Notes-3" class="headerlink" title="Notes"></a>Notes</h3><p>The proof is elegant and more importantly, easy to follow. The definition of <em>peak</em> is the key observation which makes the proof intuitive.</p>
+<blockquote>
+<p>The power of a perfect definition. — My Teaching assistant</p>
+</blockquote>
+<hr>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
-            </p><p>Original：<a href="https://sixian.li/2019/02/06/Higher-order-functions/">https://sixian.li/2019/02/06/Higher-order-functions/</a>
-            </p><p>Date：February 6th 2019, 3:47:25 pm
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/02/06/Higher-order-functions/">March 24th 2019, 4:49:12 pm</a> -->
+            </p><p>Original：<a href="https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/">https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/</a>
+            </p><p>Date：December 19th 2019, 4:33:00 pm
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/">December 19th 2019, 4:59:35 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -442,17 +478,12 @@ f'(x) = lim_{\Delta x \rightarrow 0} \frac{f(x+\Delta x) - f(x)}{\Delta x}</scri
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2019/03/25/Streams/" title="Stream">
-                    <div class="nextTitle">Stream</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2019/01/23/Binding/" title="Binding & Closure">
-                    <div class="prevTitle">Binding & Closure</div>
+                <a href="/2019/12/13/Countdown-to-2020/" title="Countdown to 2020">
+                    <div class="prevTitle">Countdown to 2020</div>
                 </a>
             
         </li>
@@ -572,7 +603,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Higher-order-functions"><span class="toc-number">1.</span> <span class="toc-text">Higher-order functions</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Levels-of-abstraction"><span class="toc-number">1.1.</span> <span class="toc-text">Levels of abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-does-one-compute-with-functions"><span class="toc-number">1.2.</span> <span class="toc-text">How does one compute with functions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Currying"><span class="toc-number">1.3.</span> <span class="toc-text">Currying</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Composition-of-functions"><span class="toc-number">1.3.1.</span> <span class="toc-text">Composition of functions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Example-Integrals-and-Derivatives"><span class="toc-number">1.3.2.</span> <span class="toc-text">Example: Integrals and Derivatives</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Integral"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">Integral</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Derivative"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">Derivative</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Triangle-inequality-In-mathbb-R-2"><span class="toc-number">1.</span> <span class="toc-text">Triangle inequality (In $\mathbb{R}^2$)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proof"><span class="toc-number">1.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notes"><span class="toc-number">1.2.</span> <span class="toc-text">Notes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mathbb-Q-is-dense-in-mathbb-R"><span class="toc-number">2.</span> <span class="toc-text">$\mathbb{Q}$ is dense in $\mathbb{R}$</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proof-1"><span class="toc-number">2.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notes-1"><span class="toc-number">2.2.</span> <span class="toc-text">Notes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Every-continuous-function-on-a-compact-domain-is-uniformly-continuous"><span class="toc-number">3.</span> <span class="toc-text">Every continuous function on a compact domain is uniformly continuous.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Proof-2"><span class="toc-number">3.1.</span> <span class="toc-text">Proof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notes-2"><span class="toc-number">3.2.</span> <span class="toc-text">Notes</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bolzano-Weierstrass-Theorem-Every-bounded-sequence-in-mathbb-R-has-a-convergent-subsequence"><span class="toc-number">4.</span> <span class="toc-text">Bolzano-Weierstrass Theorem: Every bounded sequence in $\mathbb{R}$ has a convergent subsequence</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lemma-Every-sequence-of-real-numbers-has-a-monotone-subsequence"><span class="toc-number">4.1.</span> <span class="toc-text">Lemma: Every sequence of real numbers has a monotone subsequence</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Proof-3"><span class="toc-number">4.1.1.</span> <span class="toc-text">Proof</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Proof-of-the-theorem"><span class="toc-number">4.2.</span> <span class="toc-text">Proof of the theorem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notes-3"><span class="toc-number">4.3.</span> <span class="toc-text">Notes</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
