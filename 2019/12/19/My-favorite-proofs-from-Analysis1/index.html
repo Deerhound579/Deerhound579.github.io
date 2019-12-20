@@ -416,8 +416,8 @@ height:50vh;
 \Rightarrow |x+y| &\leq |x|+|y| \text{ by the claim above} \ \square
 \end{align*}</script><h3 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h3><p>The very obvious $|x|\leq|x|$ may be hard to come up with. When you have an equality, think about inequalities it may give you. The generalization for $\mathbb{R^n}$ can be proved by induction.</p>
 <h2 id="mathbb-Q-is-dense-in-mathbb-R"><a href="#mathbb-Q-is-dense-in-mathbb-R" class="headerlink" title="$\mathbb{Q}$ is dense in $\mathbb{R}$"></a>$\mathbb{Q}$ is dense in $\mathbb{R}$</h2><p>That is, for any $x, y \in \mathbb{R}, x&lt;y, \exists q \in \mathbb{Q}$ such that $x &lt; q &lt; y$ .  Equivalently, there are infinite rational numbers between any two real numbers.</p>
-<h3 id="Proof-1"><a href="#Proof-1" class="headerlink" title="Proof"></a>Proof</h3><p>Let $n\in\mathbb{N},0&lt;\frac{1}{n} &lt; y-x \iff n&gt;\frac{1}{y-x}$ by the <a href="http://mathonline.wikidot.com/the-archimedean-property" title="No infinitely large  or infinitely small elements" target="_blank" rel="noopener">Archimedean property</a>.</p>
-<p>Consider the set $ S=\{k \in \mathbb{N}: \frac{k}{n}<x\}$. this set is finite, so its complement infinite, non-empty especially. by the [well-ordering principle][2], $\mathbb{r}\setminus s="\{k\in\mathbb{N}:\frac{k}{n}">x\}$ has a least element. </x\}$.></p>
+<h3 id="Proof-1"><a href="#Proof-1" class="headerlink" title="Proof"></a>Proof</h3><p>Let $n\in\mathbb{N},0&lt;\frac{1}{n} &lt; y-x \iff n&gt;\frac{1}{y-x}$ by the <a href="http://mathonline.wikidot.com/the-archimedean-property" target="_blank" rel="noopener">Archimedean property</a>.</p>
+<p>Consider the set $ S = \{ k \in \mathbb{N}: \frac{k}{n}\lt  x \}$. This set is finite, so its complement is infinite, non-empty especially. By the <a href="https://brilliant.org/wiki/the-well-ordering-principle/" target="_blank" rel="noopener">well-ordering principle</a>, the set $\mathbb{R}\setminus S = \{k\in\mathbb{N}:\frac{k}{n}&gt;x\}$ has a least element. </p>
 <p>Let $m$ be the smallest natural number with $\frac{m}{n} &gt; x$, especially $\frac{m-1}{n}&lt; x$.  $m, n \in \mathbb{N}, \frac{m}{n} \in \mathbb{Q}$.</p>
 <p><strong>Claim:</strong> $x&lt;\frac{m}{n}&lt;y$ is the number we want.</p>
 <script type="math/tex; mode=display">
@@ -426,7 +426,7 @@ height:50vh;
 &\frac{m}{n} >x \text{ by our choice of m}\\
 \Rightarrow &\  x<\frac{m}{n}<y \ \square
 \end{align*}</script><h3 id="Notes-1"><a href="#Notes-1" class="headerlink" title="Notes"></a>Notes</h3><p>The choice of $\frac{1}{n}&lt;y-x$ in the first step seems mysterious, but everything follows that is easy to understand. The reason why we made this choice is: $\frac{1}{n}$ is the step size, if it’s greater than $y-x$, assume $z&lt;x, z+\frac{1}{n}$ may be greater than $y$. That is, we may go past $y$ directly, which is bad for finding a number <strong>between</strong> $x, y$.</p>
-<p>Of course, the set $S =\{k\in\mathbb{N}:  \frac{k}{n}<x\} $ may be empty ( $\frac{1}{n}>x$ ), but that doesn’t matter. $\mathbb{R}\setminus S$  is “more” infinite. The well-ordering principle holds as long as $\mathbb{R}\setminus S$ is non-empty. Using infinity to show non-emptiness may seem like an overkill, but interestingly, this kind of “overkill” happens all the time. It’s easier to get information from a stronger statement.</x\}></p>
+<p>Of course, the set $S =\{k\in\mathbb{N}:\frac{k}{n} \lt x\} $ may be empty ( $\frac{1}{n}\gt x$ ), but that doesn’t matter. $\mathbb{R}\setminus S$  is “more” infinite. The well-ordering principle holds as long as $\mathbb{R}\setminus S$ is non-empty. Using infinity to show non-emptiness may seem like an overkill, but interestingly, this kind of “overkill” happens all the time. It’s easier to get information from a stronger statement.</p>
 <blockquote>
 <p>We require f to be continuous on the whole domain, but actually we only used continuity at a single point in this proof. — My analysis professor</p>
 </blockquote>
@@ -454,14 +454,13 @@ height:50vh;
 <h3 id="Lemma-Every-sequence-of-real-numbers-has-a-monotone-subsequence"><a href="#Lemma-Every-sequence-of-real-numbers-has-a-monotone-subsequence" class="headerlink" title="Lemma: Every sequence of real numbers has a monotone subsequence"></a>Lemma: Every sequence of real numbers has a monotone subsequence</h3><h4 id="Proof-3"><a href="#Proof-3" class="headerlink" title="Proof"></a>Proof</h4><p>Let $(x_n)$ be a sequence of real numbers. There are two cases regrading the number of peaks:</p>
 <p><strong>Case1:</strong> $(x_n)$ has infinitely many peaks. We can find a subsequence $(x_{n_{k} })$ consisting of peaks. $(x_{n_{1} })$ is a peak, so $x_{n_{1} } \geq x_n, \forall n\geq n_1$. Thus, $x_{n_{1} }\geq x_{n_{2} }$. Similarly, $x_{n_{2} }$ is a peak, so $x_{n_{2} } \geq x_{n_{3} } \geq x_{n_{4} } \geq \cdots$, etc.</p>
 <p>The sequence is monotone increasing. </p>
-<p><strong>Case2: </strong> $(x_n)$ has finitely many peaks. Then, we choose our subsequence after the last peak. Let $x_N$ be the last peak. For $x_n, n\geq N, \exists x_m, m\gt n, \text{such that}  x_m \gt x_n$ since $x_n$ is not a peak. Similarly, $x_m$ is not a peak, so $\exists x_k, k\gt m, \text{such that}  x_k \gt x_m$. Following this procedure, we end up with a monotone increasing subsequence.</p>
+<p><strong>Case2: </strong> $(x_n)$ has finitely many peaks. Then, we choose our subsequence after the last peak. Let $x_N$ be the last peak. For $x_n, n\geq N, \exists x_m, m\gt n, \text{such that }  x_m \gt x_n$ since $x_n$ is not a peak. Similarly, $x_m$ is not a peak, so $\exists x_k, k\gt m, \text{such that }  x_k \gt x_m$. Following this procedure, we end up with a monotone increasing subsequence.</p>
 <p>In both cases, there exists a monotone subsequence in $(x_n)$, so the lemma is proved. </p>
-<h3 id="Proof-of-the-theorem"><a href="#Proof-of-the-theorem" class="headerlink" title="Proof of the theorem"></a>Proof of the theorem</h3><p>$(x_n)$ is bounded. By lemma, $(x_n)$ has a monotone subsequence $(x_{n_{k} })$. By the [monotone convergence theorem][3], the sequence converges $\square$.</p>
+<h3 id="Proof-of-the-theorem"><a href="#Proof-of-the-theorem" class="headerlink" title="Proof of the theorem"></a>Proof of the theorem</h3><p>$(x_n)$ is bounded. By lemma, $(x_n)$ has a monotone subsequence $(x_{n_{k} })$. By the <a href="http://mathonline.wikidot.com/the-monotone-convergence-theorem/" target="_blank" rel="noopener">monotone convergence theorem</a>, the sequence converges $\square$.</p>
 <h3 id="Notes-3"><a href="#Notes-3" class="headerlink" title="Notes"></a>Notes</h3><p>The proof is elegant and more importantly, easy to follow. The definition of <em>peak</em> is the key observation which makes the proof intuitive.</p>
 <blockquote>
-<p>The power of a perfect definition. — My Teaching assistant</p>
+<p>The power of a perfect definition. — The Teaching assistant</p>
 </blockquote>
-<hr>
 
     </article>
     <!-- license  -->
@@ -470,7 +469,7 @@ height:50vh;
             <p>Author：<a href="https://sixian.li">Sixian Li</a>
             </p><p>Original：<a href="https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/">https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/</a>
             </p><p>Date：December 19th 2019, 4:33:00 pm
-            <!-- <p>Date Updated：<a href="https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/">December 19th 2019, 4:59:35 pm</a> -->
+            <!-- <p>Date Updated：<a href="https://sixian.li/2019/12/19/My-favorite-proofs-from-Analysis1/">December 20th 2019, 4:01:37 pm</a> -->
             </p><p>License：<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"></a><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
         </div>
     
@@ -721,6 +720,32 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 11
@@ -797,15 +822,15 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
+    
         <span class="sidebar-tag-name" data-tags="functional programming"><span class="iconfont-archer">&#xe606;</span>functional programming</span>
     
         <span class="sidebar-tag-name" data-tags="algorithm"><span class="iconfont-archer">&#xe606;</span>algorithm</span>
     
-        <span class="sidebar-tag-name" data-tags="fragments"><span class="iconfont-archer">&#xe606;</span>fragments</span>
-    
         <span class="sidebar-tag-name" data-tags="LeetCode"><span class="iconfont-archer">&#xe606;</span>LeetCode</span>
     
-        <span class="sidebar-tag-name" data-tags="linear algebra"><span class="iconfont-archer">&#xe606;</span>linear algebra</span>
+        <span class="sidebar-tag-name" data-tags="fragments"><span class="iconfont-archer">&#xe606;</span>fragments</span>
     
         <span class="sidebar-tag-name" data-tags="Ubuntu"><span class="iconfont-archer">&#xe606;</span>Ubuntu</span>
     
